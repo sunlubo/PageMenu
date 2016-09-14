@@ -155,12 +155,12 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     // MARK: - View life cycle
     
     /**
-    Initialize PageMenu with view controllers
-    
-    :param: viewControllers List of view controllers that must be subclasses of UIViewController
-    :param: frame Frame for page menu view
-    :param: options Dictionary holding any customization options user might want to set
-    */
+     Initialize PageMenu with view controllers
+     
+     :param: viewControllers List of view controllers that must be subclasses of UIViewController
+     :param: frame Frame for page menu view
+     :param: options Dictionary holding any customization options user might want to set
+     */
     public init(viewControllers: [UIViewController], frame: CGRect, options: [String: AnyObject]?) {
         super.init(nibName: nil, bundle: nil)
         
@@ -242,16 +242,16 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-	
-	// MARK: - Container View Controller
-	public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
-		return true
-	}
-	
-	public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
-		return true
-	}
-	
+    
+    // MARK: - Container View Controller
+    public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+        return true
+    }
+    
+    public override func shouldAutomaticallyForwardRotationMethods() -> Bool {
+        return true
+    }
+    
     // MARK: - UI Setup
     
     func setUpUserInterface() {
@@ -316,7 +316,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     
     func configureUserInterface() {
         // Add tap gesture recognizer to controller scroll view to recognize menu item selection
-        let menuItemTapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleMenuItemTap:"))
+        let menuItemTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CAPSPageMenu.handleMenuItemTap(_:)))
         menuItemTapGestureRecognizer.numberOfTapsRequired = 1
         menuItemTapGestureRecognizer.numberOfTouchesRequired = 1
         menuItemTapGestureRecognizer.delegate = self
@@ -843,7 +843,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                 }
                 
                 let timerInterval : NSTimeInterval = Double(scrollAnimationDurationOnMenuItemTap) * 0.001
-                tapTimer = NSTimer.scheduledTimerWithTimeInterval(timerInterval, target: self, selector: "scrollViewDidEndTapScrollingAnimation", userInfo: nil, repeats: false)
+                tapTimer = NSTimer.scheduledTimerWithTimeInterval(timerInterval, target: self, selector: #selector(CAPSPageMenu.scrollViewDidEndTapScrollingAnimation), userInfo: nil, repeats: false)
             }
         }
     }
@@ -905,7 +905,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                     item.titleLabel!.frame = CGRectMake(0.0, 0.0, self.view.frame.width / CGFloat(controllerArray.count), menuHeight)
                     item.menuItemSeparator!.frame = CGRectMake(item.frame.width - (menuItemSeparatorWidth / 2), item.menuItemSeparator!.frame.origin.y, item.menuItemSeparator!.frame.width, item.menuItemSeparator!.frame.height)
                     
-                    index++
+                    index += 1
                 }
             } else if menuItemWidthBasedOnTitleTextWidth && centerMenuItems {
                 self.configureMenuItemWidthBasedOnTitleTextWidthAndCenterMenuItems()
@@ -931,7 +931,7 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
                         item.frame = CGRectMake(menuItemWidth * CGFloat(index) + menuMargin * CGFloat(index + 1) + startingMenuMargin, 0.0, menuItemWidth, menuHeight)
                     }
                     
-                    index++
+                    index += 1
                 }
             }
             
@@ -965,10 +965,10 @@ public class CAPSPageMenu: UIViewController, UIScrollViewDelegate, UIGestureReco
     // MARK: - Move to page index
     
     /**
-    Move to page at index
-    
-    :param: index Index of the page to move to
-    */
+     Move to page at index
+     
+     :param: index Index of the page to move to
+     */
     public func moveToPage(index: Int) {
         if index >= 0 && index < controllerArray.count {
             // Update page if changed
